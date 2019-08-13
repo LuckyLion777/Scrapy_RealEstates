@@ -12,12 +12,12 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 ROBOTSTXT_OBEY = False
 
 # Crawlera api configuration
-CRAWLERA_ENABLED = True
-CRAWLERA_APIKEY = '6383c27825db4e2581e23c2163e5d025'
+# CRAWLERA_ENABLED = True
+# CRAWLERA_APIKEY = '6383c27825db4e2581e23c2163e5d025'
 
-DOWNLOADER_MIDDLEWARES = {
-   'scrapy_crawlera.CrawleraMiddleware': 610
-}
+# DOWNLOADER_MIDDLEWARES = {
+#    'scrapy_crawlera.CrawleraMiddleware': 610
+# }
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
