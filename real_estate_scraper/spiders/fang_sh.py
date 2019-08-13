@@ -60,12 +60,12 @@ class FangSHSpider(scrapy.Spider):
         next_link = response.xpath('//a[@id="PageControl1_hlk_next"]/@href').extract()
         if next_link:
             n_url = response.urljoin(next_link[0])
-            yield scrapy.Request(url=n_url, callback=self.parse)
+            yield scrapy.Request(url=n_url, cookies=self.cookies, callback=self.parse)
 
         product_links = response.xpath('//dl[@class="plotListwrap clearfix"]/dt/a/@href').extract()
         for link in product_links:
             url = 'https:{}'.format(link)
-            yield scrapy.Request(url=url, callback=self._parse_map_box_url)
+            yield scrapy.Request(url=url, cookies=self.cookies, callback=self._parse_map_box_url)
 
     def _parse_map_box_url(self, response):
         item = Fangtem()
@@ -86,6 +86,7 @@ class FangSHSpider(scrapy.Spider):
 
             yield scrapy.Request(
                 url=map_box_url,
+                cookies=self.cookies,
                 callback=self._parse_product,
                 meta={
                     'item': item
