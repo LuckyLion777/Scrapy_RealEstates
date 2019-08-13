@@ -37,7 +37,15 @@ class FangSHSpider(scrapy.Spider):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                       '(KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36',
-        'Referer': 'http://search.fang.com/captcha-verify/redirect?h={}'
+        'Referer': 'http://search.fang.com/captcha-fa0fc56883/redirect?h={}'
+    }
+    cookies = {
+        'global_cookie': 'airb7gfhk6nsxseligzh4na5l20jza9hupr',
+        'g_sourcepage': 'esf_xq%5Elb_pc',
+        '__utma': '147393320.206904568.1565727201.1565727201.1565727201.1',
+        '__utmc': '147393320',
+        '__utmz': '147393320.1565727201.1.1.utmcsr=search.fang.com|utmccn=(referral)|utmcmd=referral|utmcct=/captcha-fa0fc56883/',
+        'unique_cookie': 'U_airb7gfhk6nsxseligzh4na5l20jza9hupr*6'
     }
 
     prod_rank = 0
@@ -46,7 +54,7 @@ class FangSHSpider(scrapy.Spider):
     def start_requests(self):
         for url in self.start_urls:
             self.headers['Referer'] = self.headers['Referer'].format(url)
-            yield scrapy.Request(url=url, headers=self.headers, callback=self.parse)
+            yield scrapy.Request(url=url, headers=self.headers, cookies=self.cookies, callback=self.parse)
 
     def parse(self, response):
         next_link = response.xpath('//a[@id="PageControl1_hlk_next"]/@href').extract()
