@@ -25,7 +25,7 @@ class FangBJSpider(scrapy.Spider):
         'FEED_EXPORT_FIELDS': ['ID', 'Name', 'Type', 'Address', 'Location', 'Baidu_Coordinates', 'Baidu_Latitude',
                                'Baidu_Longitude', 'WGS_Coordinates', 'WGS_Latitude', 'WGS_Longitude',
                                'Average_Price_Yuan_Meter', 'Average_Price_Yuan_Feet', 'Average_Price_Dollar_Feet',
-                               'Total_Buildings', 'Total_Houses', 'Building_Age', 'URL', 'Baidu_Map_Link'],
+                               'Total_Buildings', 'Total_Houses', 'Building_Age', 'URL', 'Baidu_Map_Link', 'Developer'],
         'ROBOTSTXT_OBEY': False
     }
 
