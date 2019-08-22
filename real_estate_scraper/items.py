@@ -44,6 +44,9 @@ class Fangtem(scrapy.Item):
     Building_Age = scrapy.Field()
     URL = scrapy.Field()
     Baidu_Map_Link = scrapy.Field()
+    Property_Company = scrapy.Field()
+    Developer = scrapy.Field()
+
 
 
 class ImovelwebItem(scrapy.Item):
