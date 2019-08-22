@@ -13,12 +13,12 @@ class FangBJSpider(scrapy.Spider):
     allowed_domains = ['fang.com']
     start_urls = [
         'https://esf.fang.com/housing/__0_0_0_20000_1_0_0_0/',
-        # 'https://esf.fang.com/housing/__0_0_20000_30000_1_0_0_0/',
-        # 'https://esf.fang.com/housing/__0_0_30000_40000_1_0_0_0/',
-        # 'https://esf.fang.com/housing/__0_0_40000_50000_1_0_0_0/',
-        # 'https://esf.fang.com/housing/__0_0_50000_60000_1_0_0_0/',
-        # 'https://esf.fang.com/housing/__0_0_60000_80000_1_0_0_0/',
-        # 'https://esf.fang.com/housing/__0_0_80000_0_1_0_0_0/'
+        'https://esf.fang.com/housing/__0_0_20000_30000_1_0_0_0/',
+        'https://esf.fang.com/housing/__0_0_30000_40000_1_0_0_0/',
+        'https://esf.fang.com/housing/__0_0_40000_50000_1_0_0_0/',
+        'https://esf.fang.com/housing/__0_0_50000_60000_1_0_0_0/',
+        'https://esf.fang.com/housing/__0_0_60000_80000_1_0_0_0/',
+        'https://esf.fang.com/housing/__0_0_80000_0_1_0_0_0/'
     ]
 
     custom_settings = {
