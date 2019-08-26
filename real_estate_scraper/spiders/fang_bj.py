@@ -32,15 +32,21 @@ class FangBJSpider(scrapy.Spider):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                       '(KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36',
-        'Referer': 'http://search.fang.com/captcha-fa0fc56883/redirect?h={}'
+        'Referer': 'http://search.fang.com/captcha-c342d934c8/redirect?h={}'
     }
     cookies = {
-        'global_cookie': 'airb7gfhk6nsxseligzh4na5l20jza9hupr',
+        'city': 'www',
+        'Integrateactivity': 'notincludemc',
+        'global_cookie': 'xoyw5arttkl8kpxusb6a6tkal28jzsdodlf',
         'g_sourcepage': 'esf_xq%5Elb_pc',
-        '__utma': '147393320.206904568.1565727201.1565727201.1565727201.1',
+        '__utma': '147393320.1609595017.1566822527.1566822527.1566822527.1',
         '__utmc': '147393320',
-        '__utmz': '147393320.1565727201.1.1.utmcsr=search.fang.com|utmccn=(referral)|utmcmd=referral|utmcct=/captcha-fa0fc56883/',
-        'unique_cookie': 'U_airb7gfhk6nsxseligzh4na5l20jza9hupr*6'
+        '__utmz': '147393320.1566822527.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)',
+        '__utmb': '147393320.9.10.1566822527',
+        '__utmt_t0': '1',
+        '__utmt_t1': '1',
+        '__utmt_t2': '1',
+        'unique_cookie': 'U_xoyw5arttkl8kpxusb6a6tkal28jzsdodlf*3'
     }
 
     prod_rank = 0
