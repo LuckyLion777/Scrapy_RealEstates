@@ -55,18 +55,18 @@ class FangBJSpider(scrapy.Spider):
     def start_requests(self):
         for url in self.start_urls:
             self.headers['Referer'] = self.headers['Referer'].format(url)
-            yield scrapy.Request(url=url, headers=self.headers, cookies=self.cookies, callback=self.parse)
+            yield scrapy.Request(url=url, headers=self.headers, cookies=self.cookies, callback=self.parse, dont_filter=True)
 
     def parse(self, response):
         next_link = response.xpath('//a[@id="PageControl1_hlk_next"]/@href').extract()
         if next_link:
             n_url = response.urljoin(next_link[0])
-            yield scrapy.Request(url=n_url, cookies=self.cookies, callback=self.parse)
+            yield scrapy.Request(url=n_url, cookies=self.cookies, callback=self.parse, dont_filter=True)
 
         product_links = response.xpath('//dl[@class="plotListwrap clearfix"]/dt/a/@href').extract()
         for link in product_links:
             url = 'https:{}'.format(link)
-            yield scrapy.Request(url=url, cookies=self.cookies, callback=self._parse_map_box_url)
+            yield scrapy.Request(url=url, cookies=self.cookies, callback=self._parse_map_box_url, dont_filter=True)
 
     def _parse_map_box_url(self, response):
         item = Fangtem()
@@ -89,6 +89,7 @@ class FangBJSpider(scrapy.Spider):
                 url=map_box_url,
                 cookies=self.cookies,
                 callback=self._parse_product,
+                dont_filter=True,
                 meta={
                     'item': item
                 }
