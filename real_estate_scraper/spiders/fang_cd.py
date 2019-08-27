@@ -8,41 +8,65 @@ import traceback
 from real_estate_scraper.items import Fangtem
 
 
-class FangGZSpider(scrapy.Spider):
-    name = 'fang_gz'
+class FangBJSpider(scrapy.Spider):
+    name = 'fang_cd'
     allowed_domains = ['fang.com']
     start_urls = [
-        'https://gz.esf.fang.com/housing/__0_0_0_10000_1_0_0_0/',
-        'https://gz.esf.fang.com/housing/__0_0_10000_15000_1_0_0_0/',
-        'https://gz.esf.fang.com/housing/__0_0_15000_20000_1_0_0_0/',
-        'https://gz.esf.fang.com/housing/__0_0_20000_25000_1_0_0_0/',
-        'https://gz.esf.fang.com/housing/__0_0_25000_30000_1_0_0_0/',
-        'https://gz.esf.fang.com/housing/__0_0_30000_40000_1_0_0_0/',
-        'https://gz.esf.fang.com/housing/__0_0_40000_50000_1_0_0_0/',
-        'https://gz.esf.fang.com/housing/__0_0_50000_0_1_0_0_0/'
+        'https://cd.esf.fang.com/housing/__0_0_0_4000_1_0_0_0/',
+        'https://cd.esf.fang.com/housing/__0_0_4000_6000_1_0_0_0/',
+        'https://cd.esf.fang.com/housing/__0_0_6000_8000_1_0_0_0/',
+        'https://cd.esf.fang.com/housing/__0_0_8000_10000_1_0_0_0/',
+        'https://cd.esf.fang.com/housing/__0_0_10000_12000_1_0_0_0/',
+        'https://cd.esf.fang.com/housing/__0_0_12000_15000_1_0_0_0/',
+        'https://cd.esf.fang.com/housing/__0_0_15000_0_1_0_0_0/'
     ]
 
     custom_settings = {
         'FEED_EXPORT_FIELDS': ['ID', 'Name', 'Type', 'Address', 'Location', 'Baidu_Coordinates', 'Baidu_Latitude',
                                'Baidu_Longitude', 'WGS_Coordinates', 'WGS_Latitude', 'WGS_Longitude',
                                'Average_Price_Yuan_Meter', 'Average_Price_Yuan_Feet', 'Average_Price_Dollar_Feet',
-                               'Total_Buildings', 'Total_Houses', 'Building_Age', 'URL', 'Baidu_Map_Link'],
+                               'Total_Buildings', 'Total_Houses', 'Building_Age', 'URL', 'Baidu_Map_Link', 'Developer'],
         'ROBOTSTXT_OBEY': False
+    }
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                      '(KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36',
+        'Referer': 'http://search.fang.com/captcha-c342d934c8/redirect?h={}'
+    }
+    cookies = {
+        'city': 'www',
+        'Integrateactivity': 'notincludemc',
+        'global_cookie': 'xoyw5arttkl8kpxusb6a6tkal28jzsdodlf',
+        'g_sourcepage': 'esf_xq%5Elb_pc',
+        '__utma': '147393320.1609595017.1566822527.1566822527.1566822527.1',
+        '__utmc': '147393320',
+        '__utmz': '147393320.1566822527.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)',
+        '__utmb': '147393320.9.10.1566822527',
+        '__utmt_t0': '1',
+        '__utmt_t1': '1',
+        '__utmt_t2': '1',
+        'unique_cookie': 'U_xoyw5arttkl8kpxusb6a6tkal28jzsdodlf*3'
     }
 
     prod_rank = 0
     location_coordinates = ['']
 
+    def start_requests(self):
+        for url in self.start_urls:
+            self.headers['Referer'] = self.headers['Referer'].format(url)
+            yield scrapy.Request(url=url, headers=self.headers, cookies=self.cookies, callback=self.parse)
+
     def parse(self, response):
         next_link = response.xpath('//a[@id="PageControl1_hlk_next"]/@href').extract()
         if next_link:
             n_url = response.urljoin(next_link[0])
-            yield scrapy.Request(url=n_url, callback=self.parse)
+            yield scrapy.Request(url=n_url, cookies=self.cookies, callback=self.parse)
 
         product_links = response.xpath('//dl[@class="plotListwrap clearfix"]/dt/a/@href').extract()
         for link in product_links:
             url = 'https:{}'.format(link)
-            yield scrapy.Request(url=url, callback=self._parse_map_box_url)
+            yield scrapy.Request(url=url, cookies=self.cookies, callback=self._parse_map_box_url)
 
     def _parse_map_box_url(self, response):
         item = Fangtem()
@@ -63,6 +87,7 @@ class FangGZSpider(scrapy.Spider):
 
             yield scrapy.Request(
                 url=map_box_url,
+                cookies=self.cookies,
                 callback=self._parse_product,
                 meta={
                     'item': item
@@ -110,6 +135,9 @@ class FangGZSpider(scrapy.Spider):
                 address = product_json.get('address', None)
                 address = address.encode('utf8').decode('unicode_escape') if address else None
 
+                developer = product_json.get('developer', None)
+                developer = developer.encode('utf8').decode('unicode_escape') if developer else None
+
                 item['ID'] = self.prod_rank
                 item['Name'] = name
                 item['Address'] = address
@@ -125,6 +153,7 @@ class FangGZSpider(scrapy.Spider):
                 item['Average_Price_Dollar_Feet'] = average_price_dollar_feet
                 item['Total_Buildings'] = total_buildings
                 item['Building_Age'] = building_age
+                item['Developer'] = developer
 
                 yield item
 
