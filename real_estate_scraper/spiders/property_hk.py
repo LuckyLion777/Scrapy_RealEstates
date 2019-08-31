@@ -71,15 +71,24 @@ class PropertyFinderSpider(scrapy.Spider):
 
         saleable_area = property_info.xpath('.//table//tr[11]//td[@class="val"]/text()').extract_first()
 
-        price_HKD = property_info.xpath('.//table//tr[12]//td[@class="val"]/text()').extract_first()
+        # price_HKD = property_info.xpath('.//table//tr[12]//td[@class="val"]/text()').extract_first()
+
+        price_HKD = property_info.xpath('.//table//td[contains(text(), "Price")]'
+                                        '/following-sibling::td[1]/text()').extract_first()
 
         if price_HKD and '--' not in price_HKD:
             if 'Million' in price_HKD:
                 price_usd = price_HKD.replace('$', '').replace('Million', '').replace(',', '')
-                price_usd = float(price_usd) * 1000000 / 7.84
+                try:
+                    price_usd = float(price_usd) * 1000000 / 7.84
+                except:
+                    print('can not convert price to float')
             else:
                 price_usd = price_HKD.replace('$', '').replace(',', '')
-                price_usd = float(price_usd) * 1000000 / 7.84
+                try:
+                    price_usd = float(price_usd) * 1000000 / 7.84
+                except:
+                    print('can not convert price to float')
         else:
             price_usd = None
             price_HKD = None
