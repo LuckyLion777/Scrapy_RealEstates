@@ -8,22 +8,6 @@
 import scrapy
 
 
-class TruliaItem(scrapy.Item):
-    ID = scrapy.Field()
-    Coordinates = scrapy.Field()
-    Latitude = scrapy.Field()
-    Longitude = scrapy.Field()
-    Street_Address = scrapy.Field()
-    Locality = scrapy.Field()
-    Region = scrapy.Field()
-    ZIP = scrapy.Field()
-    Price = scrapy.Field()
-    Area_Size = scrapy.Field()
-    Bedrooms = scrapy.Field()
-    Bathrooms = scrapy.Field()
-    URL = scrapy.Field()
-
-
 class Fangtem(scrapy.Item):
     ID = scrapy.Field()
     Name = scrapy.Field()
@@ -46,48 +30,6 @@ class Fangtem(scrapy.Item):
     Baidu_Map_Link = scrapy.Field()
     Property_Company = scrapy.Field()
     Developer = scrapy.Field()
-
-
-
-class ImovelwebItem(scrapy.Item):
-    ID = scrapy.Field()
-    Price_BRA = scrapy.Field()
-    Price_USD = scrapy.Field()
-    Condomin = scrapy.Field()
-    IPTU = scrapy.Field()
-    Type = scrapy.Field()
-    Size = scrapy.Field()
-    Quarto = scrapy.Field()
-    Vaga = scrapy.Field()
-    Address = scrapy.Field()
-    Area_Total = scrapy.Field()
-    Banheiro = scrapy.Field()
-    Suite = scrapy.Field()
-    Property = scrapy.Field()
-    Advertiser = scrapy.Field()
-    Advertiser_2 = scrapy.Field()
-    Cod_Imovel = scrapy.Field()
-    Creci = scrapy.Field()
-    URL = scrapy.Field()
-
-
-class PropertyFinderItem(scrapy.Item):
-    ID = scrapy.Field()
-    Title = scrapy.Field()
-    Title_2 = scrapy.Field()
-    Reference = scrapy.Field()
-    Company = scrapy.Field()
-    ORN = scrapy.Field()
-    BRN = scrapy.Field()
-    Price = scrapy.Field()
-    Type = scrapy.Field()
-    Trakheesi_Permit = scrapy.Field()
-    Completion_Status = scrapy.Field()
-    Bedrooms = scrapy.Field()
-    Bathrooms = scrapy.Field()
-    Area_Sqft = scrapy.Field()
-    Coordinate_X = scrapy.Field()
-    Coordinate_Y = scrapy.Field()
 
 
 class PropertyHKItem(scrapy.Item):
